@@ -1,0 +1,204 @@
+SELECT 
+    category
+  , MAX(count_order) AS 'Общее количество заказов'
+  , start_date
+FROM (SELECT
+    	  category
+  	, COUNT(order_id) AS count_order
+  	, start_date
+      FROM orders
+      WHERE
+	   start_date LIKE '____-12-__'
+    	OR start_date LIKE '____-01-__'
+    	OR start_date LIKE '____-02-__'
+      GROUP BY category) AS o
+WHERE category = (SELECT 
+    category
+  , MAX(count_order) AS 'Количество заказов'
+  , start_date
+FROM)
+
+
+
+------------------------------------------------------------------------------------------------------------------------------
+7.1 
+
+WITH 
+count_supplement_specialalization AS(
+	SELECT
+    	  	supplement_specialization
+    	      , COUNT(employee_id) AS number_supplement_specialization
+    	FROM employees
+    	WHERE supplement_specialization IS NOT NULL
+    	GROUP BY supplement_specialization),
+    
+count_specialization AS(  
+	SELECT 
+    		specialization
+    	      ,	COUNT(employee_id) AS number_specialization
+	FROM employees
+    	WHERE specialization IS NOT NULL
+	GROUP BY specialization),
+    
+--Объединяет два запроса count_specialization и count_supplement_specialalization
+joined_queries AS(    
+	SELECT
+		DISTINCT s.specialization
+      	      , NVL(number_specialization, 0) AS num_specialization
+      	      , NVL(number_supplement_specialization, 0) AS num_supplement_specialization
+	FROM specializations AS s
+	LEFT OUTER JOIN count_supplement_specialalization AS css ON(css.supplement_specialization = s.specialization)
+	LEFT OUTER JOIN count_specialization AS cp ON(cp.specialization = s.specialization))
+
+--Складывает значения из столбцов num_supplement_specialization и num_specialization,
+--чтобы узнать сколько всего работников
+SELECT
+    	specialization
+      , num_supplement_specialization + num_specialization AS 'Количество работников'
+FROM joined_queries
+GROUP BY specialization;
+
+
+------------------------------------------------------------------------------------------------------------------------------
+7.2
+
+SELECT 
+      c.customer_id
+    , fio_contact_person
+    , e.employee_id
+    , first_name
+    , last_name
+    , surname
+    , o.order_id
+    , order_name
+FROM employees AS e
+LEFT OUTER JOIN works_on AS w ON(e.employee_id = w.employee_id)
+LEFT OUTER JOIN orders AS o ON(o.order_id = w.order_id)
+LEFT OUTER JOIN customers AS c ON(o.customer_id = c.customer_id)
+ORDER BY 
+      o.order_id
+    , c.customer_id
+    , e.employee_id
+
+------------------------------------------------------------------------------------------------------------------------------
+7.3
+
+SELECT 
+    category
+  , MAX(count_order) AS 'Количество заказов'
+  , start_date
+FROM (SELECT
+    	  category
+  	, COUNT(order_id) AS count_order
+  	, start_date
+      FROM orders
+      WHERE
+	   start_date LIKE '____-12-__'
+    	OR start_date LIKE '____-01-__'
+    	OR start_date LIKE '____-02-__'
+      GROUP BY category, start_date) AS o;
+
+------------------------------------------------------------------------------------------------------------------------------
+7.4
+
+SELECT 
+      e.employee_id
+    , first_name
+    , last_name
+    , surname
+    , o.order_id
+    , order_name
+    , max_work_time
+FROM employees AS e
+LEFT OUTER JOIN works_on AS w ON(e.employee_id = w.employee_id)
+LEFT OUTER JOIN (SELECT
+                    	order_id
+      		      , order_name
+      		      , MAX(work_time) AS max_work_time
+                FROM orders) AS o ON(o.order_id = w.order_id)
+WHERE max_work_time IS NOT NULL;
+
+
+------------------------------------------------------------------------------------------------------------------------------
+7.5
+
+WITH 
+mobile_developers AS(
+	SELECT
+    	  	specialization,
+    		category
+    	FROM specializations,
+    		categories 
+    	WHERE specialization = 'Mobile Developer' 
+			   AND category = 'Мобильная разработка'),
+               
+web_developers AS(   
+SELECT
+    	  	specialization,
+    		category
+    	FROM specializations,
+    		categories  
+    	WHERE specialization = 'Web Developer' 
+			   AND category = 'Сайт' ),
+               
+c_cpp_developers AS(   
+SELECT
+    		specialization,
+    		category
+    	FROM specializations,
+    		categories
+    	WHERE specialization = 'Developer C/C++' 
+    		   AND category = 'бизнес-калькулятор'),
+   
+all_developers AS(
+    	SELECT
+    	  	specialization,
+    		category
+    	FROM specializations,
+    		categories 
+    	WHERE (specialization = 'Mobile Developer' AND category = 'Мобильное приложение')
+   			OR (specialization = 'Web Developer' AND category = 'Сайт')
+    		OR (specialization = 'Developer C/C++' AND category = 'бизнес-калькулятор'))
+            
+            
+            
+            
+   SELECT 
+   		al.specialization,
+        COUNT(o.order_id) num_order
+    FROM
+    	all_developers AS al,
+        orders AS o
+     WHERE
+     	 al.category = o.category
+     GROUP BY al.specialization
+
+
+
+
+
+------------------------------------------------------------------------------------------------------------------------------
+
+
+WITH
+all_developers AS(
+    	SELECT
+    	  	specialization, 
+    		category
+    	FROM specializations,
+    		categories 
+    	WHERE (specialization IN('Android Developer', 'IOS Developer') AND category = 'Мобильное приложение')
+   			OR (specialization IN('Web Developer', 'Python Developer', 'JavaScript Developer', 'C# Developer') AND category = 'Сайт')
+    		OR (specialization IN('Developer C/C++', 'Java Developer') AND category = 'Enterprise разработка'))
+            
+            
+            
+   SELECT 
+   	al.specialization,
+        COUNT(o.order_id) num_order
+    FROM
+    	all_developers AS al,
+        orders AS o
+     WHERE
+     	 al.category = o.category
+     GROUP BY al.specialization;

@@ -1,3 +1,5 @@
 *.sql text eol=lf
 *.md text eol=lf
 *.dump binary
+datasets/mysql/department-programmers/*.sql -text
+exercises/mysql/archive/department-programmers/*.txt -text

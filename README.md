@@ -1,6 +1,6 @@
 # SQL Learning Lab
 
-Public SQL learning repository with scripts, notes, exercises, snippets, and PostgreSQL training datasets.
+Public SQL learning repository with scripts, notes, exercises, snippets, PostgreSQL training datasets, and archived MySQL/MariaDB practice materials.
 
 ## Goals
 
@@ -15,8 +15,13 @@ Public SQL learning repository with scripts, notes, exercises, snippets, and Pos
 ```text
 .
 |-- datasets/
+|   |-- mysql/
+|   |   `-- department-programmers/
 |   `-- postgres/
 |-- exercises/
+|   |-- mysql/
+|   |   `-- archive/
+|   |       `-- department-programmers/
 |   `-- postgresql/
 |-- notes/
 |-- scripts/
@@ -30,7 +35,7 @@ Public SQL learning repository with scripts, notes, exercises, snippets, and Pos
 
 - `generic`: ANSI-style examples that are portable across engines
 - `postgresql`: PostgreSQL-specific DDL, DML, indexes, and restore notes
-- `mysql`: reserved for future MySQL-focused material
+- `mysql`: historical MariaDB/MySQL archive materials plus planned curated examples
 
 ## Included Topics
 
@@ -61,6 +66,15 @@ To inspect the objects without restoring:
 pg_restore --list datasets/postgres/clinic-training-2025-06-01.dump
 ```
 
+## Archived MySQL/MariaDB Materials
+
+The repository now also includes a historical `department_programmers` block:
+
+- `datasets/mysql/department-programmers/` for raw SQL dump snapshots
+- `exercises/mysql/archive/department-programmers/` for archived task and query packs
+
+These files are preserved verbatim from the source archive and documented with local README files.
+
 ## Suggested Study Flow
 
 1. Read the matching topic note in `notes/`
@@ -73,11 +87,12 @@ pg_restore --list datasets/postgres/clinic-training-2025-06-01.dump
 
 - PostgreSQL materials: ready
 - Generic SQL materials: ready
-- MySQL materials: planned scaffold in place
+- MySQL historical materials: imported
+- MySQL curated examples: planned scaffold in place
 
 ## Next Additions
 
-- MySQL query equivalents
+- MySQL curated query equivalents
 - more interview-style exercises
 - normalization examples
 - performance tuning checklists
