@@ -1,0 +1,12 @@
+.DS_Store
+Thumbs.db
+
+.idea/
+.vscode/
+
+*.log
+*.tmp
+*.bak
+
+datasets/local/
+postgres-data/
