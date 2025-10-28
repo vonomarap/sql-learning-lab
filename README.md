@@ -1,6 +1,6 @@
 # SQL Learning Lab
 
-Public SQL learning repository with scripts, notes, exercises, snippets, PostgreSQL training datasets, and archived MySQL/MariaDB practice materials.
+Public SQL learning repository with scripts, notes, exercises, snippets, PostgreSQL training datasets, and historical MySQL/MariaDB plus Oracle practice materials.
 
 ## Goals
 
@@ -14,6 +14,9 @@ Public SQL learning repository with scripts, notes, exercises, snippets, Postgre
 
 ```text
 .
+|-- archive/
+|   `-- oracle/
+|       `-- oracle-sql-hw/
 |-- datasets/
 |   |-- mysql/
 |   |   `-- department-programmers/
@@ -36,6 +39,7 @@ Public SQL learning repository with scripts, notes, exercises, snippets, Postgre
 - `generic`: ANSI-style examples that are portable across engines
 - `postgresql`: PostgreSQL-specific DDL, DML, indexes, and restore notes
 - `mysql`: historical MariaDB/MySQL archive materials plus planned curated examples
+- `oracle`: historical Oracle homework bundle preserved as a single archive block
 
 ## Included Topics
 
@@ -75,6 +79,14 @@ The repository now also includes a historical `department_programmers` block:
 
 These files are preserved verbatim from the source archive and documented with local README files.
 
+## Archived Oracle Materials
+
+The repository also includes a single Oracle homework archive bundle:
+
+- `archive/oracle/oracle-sql-hw/` for raw Oracle SQL, PDF homework sheets, slides, and plan materials
+
+This block is preserved as a single historical archive instead of being split into curated topic folders.
+
 ## Suggested Study Flow
 
 1. Read the matching topic note in `notes/`
@@ -89,10 +101,12 @@ These files are preserved verbatim from the source archive and documented with l
 - Generic SQL materials: ready
 - MySQL historical materials: imported
 - MySQL curated examples: planned scaffold in place
+- Oracle historical archive bundle: imported
 
 ## Next Additions
 
 - MySQL curated query equivalents
+- Oracle curated exercises extracted from the archive
 - more interview-style exercises
 - normalization examples
 - performance tuning checklists

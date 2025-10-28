@@ -3,3 +3,6 @@
 *.dump binary
 datasets/mysql/department-programmers/*.sql -text
 exercises/mysql/archive/department-programmers/*.txt -text
+archive/oracle/oracle-sql-hw/*.sql -text
+archive/oracle/oracle-sql-hw/*.pdf binary
+archive/oracle/oracle-sql-hw/*.doc binary
